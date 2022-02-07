@@ -21,14 +21,26 @@ const Image = (props) => {
     );
   }
 
-  return <React.Fragment></React.Fragment>;
+  return (
+    <React.Fragment>
+      <ImageDefault {...styles}></ImageDefault>
+    </React.Fragment>
+  );
 };
 
 Image.defaultProps = {
   shape: "circle",
-  src: "https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_302/104_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF.jpg",
+  src: "https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg",
   size: 36,
 };
+
+const ImageDefault = styled.div`
+  --size: ${(props) => props.size}px;
+  width: var(--size);
+  height: var(--size);
+  background-image: url("${(props) => props.src}");
+  background-size: cover;
+`;
 
 const AspectOutter = styled.div`
   width: 100%;

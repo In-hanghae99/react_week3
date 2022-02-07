@@ -7,7 +7,6 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import { auth } from "../../shared/firebase";
 
 //actions
-const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
@@ -25,8 +24,9 @@ const initialState = {
 };
 
 const user_initial = {
-  user_name: "bong";
-}
+  user_name: "bong",
+  is_login: false,
+};
 
 //middleware actions
 const loginAction = (user) => {
@@ -34,6 +34,25 @@ const loginAction = (user) => {
     console.log(history);
     dispatch(setUser(user));
     history.push("/");
+  };
+};
+
+const signupFB = (id, pwd, user_name) => {
+  return function (dispatch, getState, { history }) {
+    auth
+      .createUserWithEmailAndPassword(id, pwd)
+      .then((user) => {
+        console.log(user);
+        // Signed in
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        console.log(errorCode, errorMessage);
+        // ..
+      });
   };
 };
 
@@ -79,6 +98,7 @@ const actionCreators = {
   logOut,
   getUser,
   loginAction,
+  signupFB,
 };
 
 export { actionCreators };
