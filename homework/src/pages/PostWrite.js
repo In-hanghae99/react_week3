@@ -39,11 +39,27 @@ const PostWrite = (props) => {
   };
 
   const addPost = () => {
-    dispatch(postActions.addPostFB(contents));
+    if (!is_edit) {
+      alert("포스트 정보가 없어요!");
+      history.goBack();
+
+      return;
+    }
+    if (is_edit) {
+      dispatch(postActions.addPostFB(contents));
+    }
   };
 
   const editPost = () => {
-    dispatch(postActions.editPostFB(post_id, { contents: contents }));
+    if (!is_edit) {
+      alert("포스트 정보가 없어요!");
+      history.goBack();
+
+      return;
+    }
+    if (is_edit) {
+      dispatch(postActions.editPostFB(post_id, { contents: contents }));
+    }
   };
 
   if (!is_login) {

@@ -29,7 +29,7 @@ const initialPost = {
   //     user_profile: "http://file3.instiz.net/data/cached_img/upload/2019/01/15/6/04ee674122410d063a5966fa16da5db6.jpg",
   //   },
   image_url:
-    "http://file3.instiz.net/data/cached_img/upload/2019/01/15/6/04ee674122410d063a5966fa16da5db6.jpg",
+    "https://idsb.tmgrup.com.tr/ly/uploads/images/2021/09/08/thumbs/800x531/142774.jpg",
   contents: "",
   comment_cnt: 0,
   insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
@@ -143,8 +143,6 @@ const addPostFB = (contents = "", layout = "") => {
       snapshot.ref
         .getDownloadURL()
         .then((url) => {
-          console.log(url);
-
           return url;
         })
         .then((url) => {

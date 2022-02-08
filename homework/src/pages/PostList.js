@@ -9,13 +9,11 @@ const PostList = (props) => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.user.user);
-  console.log(post_list);
-  console.log(user_info);
 
   React.useEffect(() => {
-    console.log("in list");
-
-    dispatch(postActions.getPostFB());
+    if (post_list.length === 0) {
+      dispatch(postActions.getPostFB());
+    }
   }, []);
 
   return (
