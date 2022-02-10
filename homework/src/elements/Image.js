@@ -31,7 +31,7 @@ const Image = (props) => {
 Image.defaultProps = {
   shape: "circle",
   src: "https://i.insider.com/4f3433986bb3f7b67a00003c?width=600&format=jpeg&auto=webp",
-  size: 36,
+  size: "36",
 };
 
 const ImageDefault = styled.div`

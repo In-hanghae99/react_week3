@@ -12,14 +12,15 @@ const PostWrite = (props) => {
   const preview = useSelector((state) => state.image.preview);
   const post_list = useSelector((state) => state.post.list);
 
+  const { history } = props;
+
   const post_id = props.match.params.id;
   const is_edit = post_id ? true : false;
-
-  const { history } = props;
 
   let _post = is_edit ? post_list.find((p) => p.id === post_id) : null;
 
   const [contents, setContents] = React.useState(_post ? _post.contents : "");
+  const [layout, selectLayout] = React.useState("");
 
   React.useEffect(() => {
     if (is_edit && !_post) {
@@ -39,26 +40,17 @@ const PostWrite = (props) => {
   };
 
   const addPost = () => {
-    if (!is_edit) {
-      alert("포스트 정보가 없어요!");
-      history.goBack();
+    console.log(props, is_edit, contents, layout);
 
-      return;
-    }
-    if (is_edit) {
-      dispatch(postActions.addPostFB(contents));
-    }
+    dispatch(postActions.addPostFB(contents, layout));
   };
 
   const editPost = () => {
-    if (!is_edit) {
-      alert("포스트 정보가 없어요!");
-      history.goBack();
-
-      return;
-    }
+    console.log(is_edit, contents, layout);
     if (is_edit) {
-      dispatch(postActions.editPostFB(post_id, { contents: contents }));
+      dispatch(
+        postActions.editPostFB(post_id, { contents: contents, layout: layout })
+      );
     }
   };
 
@@ -86,7 +78,7 @@ const PostWrite = (props) => {
         <Text margin="0px" size="36px" bold>
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
-        <Upload />
+        <Upload preview={preview} />
       </Grid>
 
       <Grid>
@@ -95,11 +87,59 @@ const PostWrite = (props) => {
             미리보기
           </Text>
         </Grid>
-
-        <Image
-          shape="rectangle"
-          src={preview ? preview : "http://via.placeholder.com/400x300"}
-        />
+        <Grid padding="16px">
+          <Input
+            type="radio"
+            label="오른쪽에 이미지 왼쪽에 텍스트"
+            _onClick={() => selectLayout("right")}
+          ></Input>
+          <Grid is_flex>
+            <Grid>
+              <Text margin="0px" size="36px" bold>
+                {contents ? contents : ""}
+              </Text>
+            </Grid>
+            <Grid>
+              <Image
+                shape="rectangle"
+                src={preview ? preview : "http://via.placeholder.com/400x300"}
+              ></Image>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid padding="16px">
+          <Input
+            type="radio"
+            label="왼쪽에 이미지 오른쪽에 텍스트"
+            _onClick={() => selectLayout("left")}
+          ></Input>
+          <Grid is_flex>
+            <Grid>
+              <Image
+                shape="rectangle"
+                src={preview ? preview : "http://via.placeholder.com/400x300"}
+              ></Image>
+            </Grid>
+            <Grid>
+              <Text margin="0px" size="36px" bold>
+                {contents ? contents : ""}
+              </Text>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid padding="16px">
+          <Input
+            type="radio"
+            label="하단에 이미지 상단에 텍스트"
+            _onClick={() => selectLayout("center")}
+          ></Input>
+          <Grid is_flex>
+            <Image
+              shape="rectangle"
+              src={preview ? preview : "http://via.placeholder.com/400x300"}
+            ></Image>
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid padding="16px">
@@ -109,6 +149,7 @@ const PostWrite = (props) => {
           label="게시글 내용"
           placeholder="게시글 작성"
           multiLine
+          bg="aliceblue"
         />
       </Grid>
 
@@ -116,7 +157,11 @@ const PostWrite = (props) => {
         {is_edit ? (
           <Button text="게시글 수정" _onClick={editPost}></Button>
         ) : (
-          <Button text="게시글 작성" _onClick={addPost}></Button>
+          <Button
+            text="게시글 작성"
+            _onClick={addPost}
+            disabled={contents === "" ? true : false}
+          ></Button>
         )}
       </Grid>
     </React.Fragment>

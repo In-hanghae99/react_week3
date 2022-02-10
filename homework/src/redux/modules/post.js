@@ -116,6 +116,7 @@ const editPostFB = (post_id = null, post = {}) => {
 
 const addPostFB = (contents = "", layout = "") => {
   return function (dispatch, getState, { history }) {
+    console.log(contents);
     const postDB = firestore.collection("post");
     const _user = getState().user.user;
 
@@ -176,6 +177,7 @@ const getPostFB = () => {
 
     query.get().then((docs) => {
       let post_list = [];
+
       docs.forEach((doc) => {
         let _post = doc.data();
 

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, _onChange, type, multiLine } = props;
-
+  const { label, placeholder, _onChange, _onClick, type, multiLine, bg } =
+    props;
   if (multiLine) {
     return (
       <Grid>
@@ -18,7 +18,21 @@ const Input = (props) => {
       </Grid>
     );
   }
-
+  if (type === "radio") {
+    return (
+      <React.Fragment>
+        <Grid>
+          <ElRadio
+            name="layout"
+            type={type}
+            placeholder={placeholder}
+            onClick={_onClick}
+          />
+          <label htmlFor="left">{label} </label>
+        </Grid>
+      </React.Fragment>
+    );
+  }
   return (
     <React.Fragment>
       <Grid>
@@ -34,7 +48,9 @@ Input.defaultProps = {
   label: "텍스트",
   placeholder: "텍스트를 입력해주세요.",
   type: "text",
+  bg: "#fff",
   _onChange: () => {},
+  _onClick: () => {},
 };
 
 const ElTextarea = styled.textarea`
@@ -50,5 +66,7 @@ const ElInput = styled.input`
   padding: 12px 4px;
   box-sizing: border-box;
 `;
+
+const ElRadio = styled.input``;
 
 export default Input;

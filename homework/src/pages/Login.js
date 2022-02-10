@@ -62,6 +62,7 @@ const Login = (props) => {
             console.log("로그인 했어!");
             login();
           }}
+          disable={id === "" || pwd === "" ? true : false}
         ></Button>
       </Grid>
     </React.Fragment>
